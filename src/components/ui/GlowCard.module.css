@@ -1,0 +1,177 @@
+/* Dark card with a diagonal gradient border, accent bar and a slowly spinning colour glow. */
+
+.perspective {
+  width: 100%;
+  height: 100%;
+}
+
+.card {
+  --card-bg: #222;
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+  cursor: pointer;
+  /* The live cards fall back to the WordPress theme's system font stack, not Inter. */
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  border: 1px solid transparent;
+  border-radius: 1.25rem;
+  background:
+    padding-box linear-gradient(var(--card-bg), var(--card-bg)),
+    border-box
+      linear-gradient(-45deg, var(--accent), var(--stop), var(--stop), var(--stop), var(--accent));
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+  transition:
+    transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  backface-visibility: hidden;
+}
+
+@media (min-width: 768px) {
+  .perspective {
+    perspective: 1500px;
+  }
+  .card {
+    transform-style: preserve-3d;
+  }
+  .card:hover {
+    z-index: 20;
+    transform: rotateX(8deg) translateY(var(--lift, -15px));
+    box-shadow:
+      0 40px 80px -20px rgba(0, 0, 0, 0.9),
+      0 20px 40px -15px rgba(0, 0, 0, 0.8);
+  }
+}
+
+.mission {
+  --card-bg: #1a1a1a;
+  --lift: -10px;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.blue {
+  --accent: rgba(59, 130, 246, var(--accent-alpha, 0.7));
+  --stop: rgba(59, 130, 246, 0);
+  --bar: #3b82f6;
+  --bar-glow: rgba(59, 130, 246, 0.5);
+}
+.red {
+  --accent: rgba(239, 68, 68, var(--accent-alpha, 0.7));
+  --stop: rgba(239, 68, 68, 0);
+  --bar: #ef4444;
+  --bar-glow: rgba(239, 68, 68, 0.5);
+}
+.orange {
+  --accent: rgba(249, 115, 22, var(--accent-alpha, 0.7));
+  --stop: rgba(249, 115, 22, 0);
+  --bar: #f97316;
+  --bar-glow: rgba(249, 115, 22, 0.5);
+}
+.purple {
+  --accent: rgba(168, 85, 247, var(--accent-alpha, 0.7));
+  --stop: rgba(168, 85, 247, 0);
+  --bar: #a855f7;
+  --bar-glow: rgba(168, 85, 247, 0.5);
+}
+.mission.blue,
+.mission.red {
+  --accent-alpha: 0.6;
+}
+
+.bar {
+  position: relative;
+  z-index: 10;
+  height: 4px;
+  width: 48px;
+  border-radius: 99px;
+  background: var(--bar);
+  color: var(--bar-glow);
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+/* Two blurred blobs orbiting the card centre. */
+.glow {
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 0;
+  width: 350px;
+  height: 350px;
+  animation: spin-glow 12s linear infinite;
+}
+
+@keyframes spin-glow {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+.glow > span {
+  position: absolute;
+  left: 50%;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 9999px;
+  opacity: 0.35;
+  filter: blur(70px);
+}
+.glow > span:first-child {
+  top: 0;
+  transform: translate(-50%, -50%);
+  background: var(--blob-a);
+}
+.glow > span:last-child {
+  bottom: 0;
+  transform: translate(-50%, 50%);
+  background: var(--blob-b);
+}
+
+.blue .glow {
+  --blob-a: #3b82f6;
+  --blob-b: #22d3ee;
+}
+.red .glow {
+  --blob-a: #ef4444;
+  --blob-b: #fb7185;
+}
+.orange .glow {
+  --blob-a: #f97316;
+  --blob-b: #f87171;
+}
+.purple .glow {
+  --blob-a: #a855f7;
+  --blob-b: #e879f9;
+}
+
+.strength .glow > span {
+  opacity: 0.3;
+}
+
+.mission .glow {
+  width: 300px;
+  height: 300px;
+}
+.mission .glow > span {
+  width: 12rem;
+  height: 12rem;
+  opacity: 0.2;
+  filter: blur(80px);
+}
+.mission.red .glow {
+  --blob-a: #dc2626;
+  --blob-b: #f43f5e;
+}
+.mission.blue .glow {
+  --blob-a: #2563eb;
+  --blob-b: #06b6d4;
+}
+.mission .bar {
+  width: 40px;
+}

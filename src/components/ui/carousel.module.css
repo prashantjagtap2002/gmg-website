@@ -1,0 +1,32 @@
+/*
+ * Infinite slider track used with useLoopCarousel.
+ * Set --pv (slides in view) and --gap on the track; --pos comes from the hook.
+ */
+.track {
+  display: flex;
+  gap: var(--gap, 0px);
+  transform: translateX(
+    calc(var(--pos) * -1 * ((100% - (var(--pv, 1) - 1) * var(--gap, 0px)) / var(--pv, 1) + var(--gap, 0px)))
+  );
+  transition: transform var(--speed, 500ms) ease;
+  will-change: transform;
+}
+
+.slide {
+  flex: 0 0 calc((100% - (var(--pv, 1) - 1) * var(--gap, 0px)) / var(--pv, 1));
+  min-width: 0;
+}
+
+/*
+ * Slider on phones, plain grid from 768px up (set --cols and --grid-gap).
+ * Lives here rather than in Tailwind classes because module CSS is unlayered
+ * and would win over utilities like md:grid.
+ */
+@media (min-width: 768px) {
+  .desktopGrid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr));
+    gap: var(--grid-gap, 1.5rem);
+    transform: none;
+  }
+}

@@ -22,6 +22,12 @@
 
 # misc
 .DS_Store
+# full-size video sources
+/media-originals/
+# site media is served from the gmg-website Cloudflare R2 bucket
+/public/media/
+# dev server logs
+dev.log
 *.pem
 
 # debug
@@ -32,6 +38,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel

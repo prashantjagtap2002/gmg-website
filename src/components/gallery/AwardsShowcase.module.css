@@ -1,0 +1,439 @@
+.section {
+  --blue: #4a6cf7;
+  --gold: #e5b03c;
+  --gray: #a0a0a0;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 80px 20px;
+  font-family: var(--font-inter), sans-serif;
+  color: #fff;
+}
+
+.container {
+  display: grid;
+  width: 100%;
+  max-width: 1300px;
+  grid-template-columns: 1fr 1.2fr;
+  align-items: center;
+  gap: 60px;
+}
+.frameRight .container {
+  grid-template-columns: 1.2fr 1fr;
+}
+
+/* ---------- Hero column: gold frame + trophy ---------- */
+
+.hero {
+  position: relative;
+  order: 1;
+  padding-bottom: 40px;
+}
+.frameRight .hero {
+  order: 2;
+}
+
+.frame {
+  position: relative;
+  display: flex;
+  max-width: 380px;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 40px;
+  padding: 60px 40px 50px;
+  border: 3px solid var(--gold);
+  text-align: center;
+}
+
+.logo {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  margin: 15px 0 30px;
+}
+.logo img {
+  width: auto;
+  height: auto;
+  max-width: 220px;
+  max-height: 90px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(255, 255, 255, 0.1));
+}
+
+.year {
+  position: absolute;
+  top: -55px;
+  left: -20px;
+  z-index: 2;
+  padding: 0 15px;
+  background: #0a0a0a;
+  color: var(--blue);
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 110px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+.compact .year {
+  top: -30px;
+  left: -10px;
+  font-size: 42px;
+}
+
+/* Replays whenever the active award's year (or logo) changes. */
+.update {
+  animation: update 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+@keyframes update {
+  0% {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.95);
+    color: var(--gold);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    color: var(--blue);
+  }
+}
+
+.line {
+  position: absolute;
+  top: 75px;
+  left: -50px;
+  z-index: 3;
+  width: 120px;
+  height: 2px;
+  background: var(--blue);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s;
+}
+.visible .line {
+  transform: scaleX(1);
+}
+
+.ticks {
+  position: absolute;
+  display: flex;
+  gap: 15px;
+}
+.ticks span {
+  width: 4px;
+  height: 40px;
+  border-radius: 2px;
+  background: var(--blue);
+}
+.ticksTop {
+  top: -20px;
+  right: 40px;
+}
+.ticksTop span:last-child {
+  background: #fff;
+}
+.ticksBottom {
+  bottom: -30px;
+  left: 20px;
+}
+.ticksBottom span:last-child {
+  background: var(--gold);
+}
+
+.titleYears {
+  margin-bottom: 5px;
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 24px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.titleVictory {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.description {
+  max-width: 260px;
+  color: var(--gray);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.mainTrophy {
+  position: absolute;
+  bottom: -30px;
+  left: -80px;
+  z-index: 5;
+  width: 140px;
+  height: auto;
+  filter: drop-shadow(0 15px 15px rgba(229, 176, 60, 0.2));
+  animation: float 4s ease-in-out infinite;
+}
+
+/* ---------- Carousel column ---------- */
+
+.carouselColumn {
+  position: relative;
+  order: 2;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  padding: 0 55px;
+}
+.frameRight .carouselColumn {
+  order: 1;
+}
+
+.viewport {
+  width: 100%;
+  overflow: hidden;
+  padding: 40px 0;
+  container-type: inline-size;
+}
+
+.track {
+  --pv: 3;
+  --gap: 30px;
+}
+@container (max-width: 499px) {
+  .track {
+    --pv: 2;
+  }
+}
+@container (max-width: 359px) {
+  .track {
+    --pv: 1;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.card:hover {
+  transform: translateY(-10px);
+}
+
+.cardTrophy {
+  width: 100px;
+  height: auto;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.3));
+  animation: float-small 4s ease-in-out infinite;
+}
+
+.cardYear {
+  margin-bottom: 8px;
+  color: var(--gold);
+  font-size: 24px;
+  font-weight: 700;
+}
+.compact .cardYear {
+  font-size: 20px;
+}
+
+.cardTitle {
+  display: flex;
+  width: 100%;
+  min-height: 55px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.compact .cardTitle {
+  min-height: 70px;
+}
+
+.arrow {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(74, 108, 247, 0.3);
+  border-radius: 50%;
+  background: rgba(74, 108, 247, 0.1);
+  color: var(--blue);
+  transition: all 0.3s ease;
+}
+.arrow:hover {
+  background: rgba(74, 108, 247, 0.3);
+  transform: scale(1.1);
+}
+.arrow svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+.prev {
+  left: 0;
+}
+.next {
+  right: 0;
+}
+
+/* MG uses bare chevrons that nudge outward on hover. */
+.plainArrows .arrow {
+  width: auto;
+  height: auto;
+  padding: 10px;
+  border: none;
+  border-radius: 0;
+  background: none;
+}
+.plainArrows .arrow svg {
+  width: 24px;
+  height: 24px;
+}
+.plainArrows .prev:hover {
+  background: none;
+  transform: translateX(-5px);
+}
+.plainArrows .next:hover {
+  background: none;
+  transform: translateX(5px);
+}
+
+.counter {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  transform: translateX(-50%);
+}
+.counterDivider {
+  color: var(--gold);
+  font-weight: 400;
+}
+.counterTotal {
+  color: var(--gray);
+  font-size: 14px;
+}
+.compact .counterDivider,
+.compact .counterTotal {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* ---------- Scroll reveal ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.visible .reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+.d1 {
+  transition-delay: 0.1s;
+}
+.d2 {
+  transition-delay: 0.2s;
+}
+.d3 {
+  transition-delay: 0.3s;
+}
+.d4 {
+  transition-delay: 0.4s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+@keyframes float-small {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .container,
+  .frameRight .container {
+    grid-template-columns: 1fr;
+    gap: 80px;
+  }
+  .hero,
+  .frameRight .hero {
+    order: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .carouselColumn,
+  .frameRight .carouselColumn {
+    order: 2;
+  }
+  .frame {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .titleVictory {
+    font-size: 48px;
+  }
+  .year {
+    top: -45px;
+    font-size: 90px;
+  }
+  .compact .year {
+    top: -30px;
+    font-size: 42px;
+  }
+  .mainTrophy {
+    left: -40px;
+    width: 100px;
+  }
+  .carouselColumn {
+    padding: 0 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .titleVictory {
+    font-size: 38px;
+  }
+  .arrow {
+    display: none;
+  }
+  .carouselColumn {
+    padding: 0;
+  }
+  .track {
+    --gap: 20px;
+  }
+}
